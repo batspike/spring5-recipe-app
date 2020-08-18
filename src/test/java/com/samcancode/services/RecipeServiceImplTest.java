@@ -1,11 +1,15 @@
 package com.samcancode.services;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.never;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +34,22 @@ class RecipeServiceImplTest {
 	}
 
 	@Test
-	void getRecipes() throws Exception {
+	void getRecipeByIdTest() throws Exception {
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		Optional<Recipe> recipeOptional = Optional.of(recipe);
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(recipeOptional);
+		
+		Recipe recipeReturned = recipeService.findById(1L);
+		
+		assertNotNull(recipeReturned, "Null recipe returned");
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(recipeRepo, never()).findAll();
+	}
+	
+	@Test
+	void getRecipesTest() throws Exception {
 		Recipe recipe = new Recipe();
 		Set<Recipe> recipes = new HashSet<>();
 		recipes.add(recipe);

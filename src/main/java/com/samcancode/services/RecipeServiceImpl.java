@@ -1,6 +1,7 @@
 package com.samcancode.services;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,13 @@ public class RecipeServiceImpl implements RecipeService {
 		Set<Recipe> recipes = new HashSet<>();
 		recipeRepo.findAll().forEach(recipes::add);
 		return recipes;
+	}
+
+	@Override
+	public Recipe findById(Long id) {
+		Optional<Recipe> recipeOptional = recipeRepo.findById(id);
+		
+		return recipeOptional.orElse(null);
 	}
 
 }
