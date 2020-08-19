@@ -44,4 +44,10 @@ public class RecipeController {
         model.addAttribute("recipe", recipeSvc.findDtoById(Long.valueOf(id)));
         return  "recipe/recipeform";
     }
+	
+	@RequestMapping("recipe/{id}/delete")
+	public String deleteRecipe(@PathVariable String id){
+		recipeSvc.deleteById(Long.valueOf(id));
+		return  "redirect:/";
+	}
 }

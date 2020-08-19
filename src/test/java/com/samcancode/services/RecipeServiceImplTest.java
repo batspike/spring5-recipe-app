@@ -70,5 +70,14 @@ class RecipeServiceImplTest {
 		verify(recipeRepo, times(1)).findAll(); // verify the recipeRepo was called once during the above test.
 		verify(recipeRepo, never()).findById(anyLong());
 	}
+	
+	@Test
+	void testDeleteById() {
+		Long idToDelete = Long.valueOf(2L);
+		
+		recipeService.deleteById(idToDelete);
+		
+		verify(recipeRepo, times(1)).deleteById(anyLong());
+	}
 
 }

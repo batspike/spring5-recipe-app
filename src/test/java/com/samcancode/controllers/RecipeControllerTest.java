@@ -56,7 +56,7 @@ class RecipeControllerTest {
 		
 		mockMvc.perform(post("/recipe", new RecipeDto()))
 		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/recipe/show/" + recipeDto.getId()));
+		.andExpect(view().name("redirect:/recipe/" + recipeDto.getId() + "/show"));
 	}
 	
 	@Test
@@ -72,5 +72,16 @@ class RecipeControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));
+	}
+	
+	@Test
+	void testDeleteAction() throws Exception {
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		mockMvc.perform(get("/recipe/1/delete"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/"));
+		
+		verify(recipeSvc, times(1)).deleteById(anyLong());
 	}
 }
