@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.samcancode.Dto.RecipeDto;
 import com.samcancode.converters.RecipeDtoToRecipe;
@@ -41,8 +42,15 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return recipeOptional.orElse(null);
 	}
+	
+	@Override
+    @Transactional
+    public RecipeDto findDtoById(Long id) {
+        return recipeToRecipeDto.convert(findById(id));
+    }
 
 	@Override
+	@Transactional
 	public RecipeDto saveRecipeDto(RecipeDto command) {
         Recipe detachedRecipe = recipeDtoToRecipe.convert(command);
 

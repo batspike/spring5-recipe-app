@@ -3,6 +3,7 @@ package com.samcancode.controllers;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -38,7 +39,7 @@ class RecipeControllerTest {
 		
 		when(recipeSvc.findById(anyLong())).thenReturn(recipe);
 		
-		mockMvc.perform(get("/recipe/show/1"))
+		mockMvc.perform(get("/recipe/1/show"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("recipe/show"));
 	}
@@ -58,4 +59,18 @@ class RecipeControllerTest {
 		.andExpect(view().name("redirect:/recipe/show/" + recipeDto.getId()));
 	}
 	
+	@Test
+	void testGetUpdateView() throws Exception {
+		RecipeDto dto = new RecipeDto();
+		dto.setId(2L);
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		when(recipeSvc.findDtoById(anyLong())).thenReturn(dto);
+		
+		mockMvc.perform(get("/recipe/1/update"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("recipe/recipeform"))
+				.andExpect(model().attributeExists("recipe"));
+	}
 }

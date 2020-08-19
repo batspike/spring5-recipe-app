@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.samcancode.Dto.CategoryDto;
-import com.samcancode.Dto.UnitOfMeasureDto;
 import com.samcancode.domain.Category;
-import com.samcancode.domain.UnitOfMeasure;
 
 class CategoryDtoToCategoryTest {
 	public static final String DESCRIPTION = "description";

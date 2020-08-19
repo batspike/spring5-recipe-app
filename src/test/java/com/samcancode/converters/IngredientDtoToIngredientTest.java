@@ -35,7 +35,7 @@ class IngredientDtoToIngredientTest {
 		dto.setDescription(DESCRIPTION);
 		UnitOfMeasureDto uomDto = new UnitOfMeasureDto();
 		uomDto.setId(UOM_ID);
-		dto.setUnitOfMeasure(uomDto);
+		dto.setUom(uomDto);
 		
 		//When
 		Ingredient ingredient = converter.convert(dto);
