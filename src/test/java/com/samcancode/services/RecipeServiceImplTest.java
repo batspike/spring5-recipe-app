@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.samcancode.converters.RecipeDtoToRecipe;
+import com.samcancode.converters.RecipeToRecipeDto;
 import com.samcancode.domain.Recipe;
 import com.samcancode.repositories.RecipeRepository;
 
@@ -26,11 +28,17 @@ class RecipeServiceImplTest {
 	
 	@Mock
 	RecipeRepository recipeRepo;
+	
+	@Mock
+    RecipeToRecipeDto recipeToRecipeDto;
+
+    @Mock
+    RecipeDtoToRecipe recipeDtoToRecipe;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeServiceImpl(recipeRepo);
+		recipeService = new RecipeServiceImpl(recipeRepo, recipeDtoToRecipe, recipeToRecipeDto);
 	}
 
 	@Test
@@ -60,6 +68,7 @@ class RecipeServiceImplTest {
 		
 		assertEquals(actualRecipes.size(), 1);
 		verify(recipeRepo, times(1)).findAll(); // verify the recipeRepo was called once during the above test.
+		verify(recipeRepo, never()).findById(anyLong());
 	}
 
 }
