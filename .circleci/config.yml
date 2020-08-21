@@ -21,12 +21,6 @@ jobs:
             - v1-dependencies-{‌{ checksum "pom.xml" }}
             - v1-dependencies-
 
-      # Forces maven to download everything
-      # Will install the modules into the local maven cache
-      # It will skip the test till it gets to runing integration-test
-      # Because we have one module dependant on another we need to perform the build this way
-      - run: mvn install -DskipTests
-
       - run: mvn dependency:go-offline
 
       - save_cache:
@@ -34,5 +28,13 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{‌{ checksum "pom.xml" }}
 
-      - run: mvn integration-test
+       # run tests! and gen code coverage
+      - run: mvn integration-test cobertura:cobertura
       
+      - store_test_results:
+          path: target/surefire-reports
+
+      - run:
+          name: Send to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
+          
