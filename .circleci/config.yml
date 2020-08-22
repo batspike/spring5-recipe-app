@@ -29,7 +29,7 @@ jobs:
           key: v1-dependencies-{‌{ checksum "pom.xml" }}
 
        # run tests! and gen code coverage
-      - run: mvn integration-test cobertura:cobertura
+      - run: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
       
       - store_test_results:
           path: target/surefire-reports
