@@ -6,6 +6,7 @@ spring:
         url: jdbc:mysql://localhost:3306/sfg_dev?useSSL=false&serverTimezone=UTC
         username: sfg_dev_user
         password: guru
+        platform: mysql
 
     jpa:
         hibernate:
