@@ -1,4 +1,6 @@
 # Note spring.jpa.database must contain upper case value per org.springframework.com.jpa.vendor.Database
+# spring.jpa.hibernate.ddl-auto can be create, create-drop, none, update, or validate.
+# spring.jpa.properties.javax.persistence.schema-generation.scripts.action can be none, create, drop, drop-and-create
 spring:
     datasource:
         url: jdbc:mysql://localhost:3306/sfg_dev?useSSL=false&serverTimezone=UTC
@@ -7,17 +9,19 @@ spring:
 
     jpa:
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto:  validate
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
         show-sql: true
         properties:
             hibernate:
                 hbm2ddl:
-                    delimiter: ";"            javax:
+                    delimiter: ";"
+
+            javax:
                 persistence:
                     schema-generation:
                         scripts:
-                            action: create
+                            action: none
                             create-target: database_create.sql
                             create-source: metadata
